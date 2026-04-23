@@ -1104,9 +1104,79 @@
     <script>
       (function () {
         const BOOK_DOWNLOAD_URL = "#kids-wealth-book-download";
+        const LEAD_LOG_ENDPOINT = "";
+        const LEAD_STORAGE_KEY = "eclc_kids_book_leads_v1";
+        const AUTO_DOWNLOAD_LEAD_CSV = false;
         const form = document.getElementById("kids-book-form");
         const button = document.getElementById("kids-book-download-btn");
         if (!form || !button) return;
+
+        const csvEscape = function (value) {
+          const normalized = String(value == null ? "" : value).replace(/"/g, "\"\"");
+          return "\"" + normalized + "\"";
+        };
+
+        const leadsToCsv = function (leads) {
+          const headers = ["submitted_at", "source_page", "parent_name", "email", "child_age"];
+          const lines = [headers.map(csvEscape).join(",")];
+          leads.forEach(function (lead) {
+            lines.push(
+              headers
+                .map(function (header) {
+                  return csvEscape(lead[header] || "");
+                })
+                .join(","),
+            );
+          });
+          return lines.join("\n");
+        };
+
+        const safeParseLeads = function (raw) {
+          try {
+            const parsed = JSON.parse(raw || "[]");
+            return Array.isArray(parsed) ? parsed : [];
+          } catch (error) {
+            return [];
+          }
+        };
+
+        const saveLeadLocally = function (lead) {
+          const stored = safeParseLeads(localStorage.getItem(LEAD_STORAGE_KEY));
+          stored.push(lead);
+          localStorage.setItem(LEAD_STORAGE_KEY, JSON.stringify(stored));
+          return stored;
+        };
+
+        const downloadCsv = function (csvText) {
+          const blob = new Blob([csvText], { type: "text/csv;charset=utf-8;" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "eclc-kids-book-leads.csv";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        };
+
+        const sendLeadToEndpoint = async function (lead) {
+          if (!LEAD_LOG_ENDPOINT.startsWith("http")) return;
+          try {
+            await fetch(LEAD_LOG_ENDPOINT, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(lead),
+              keepalive: true,
+            });
+          } catch (error) {
+            // Keep UX smooth even if endpoint is offline.
+          }
+        };
+
+        window.downloadKidsBookLeadsCsv = function () {
+          const stored = safeParseLeads(localStorage.getItem(LEAD_STORAGE_KEY));
+          downloadCsv(leadsToCsv(stored));
+        };
 
         const inputs = Array.from(form.querySelectorAll("input[required]"));
         const validate = function () {
@@ -1119,10 +1189,26 @@
           input.addEventListener("input", validate);
         });
 
-        form.addEventListener("submit", function (event) {
+        form.addEventListener("submit", async function (event) {
           event.preventDefault();
           validate();
-          if (button.disabled || !BOOK_DOWNLOAD_URL.startsWith("http")) return;
+          if (button.disabled) return;
+
+          const lead = {
+            submitted_at: new Date().toISOString(),
+            source_page: window.location.href,
+            parent_name: (form.querySelector("input[name='parent_name']") || {}).value || "",
+            email: (form.querySelector("input[name='email']") || {}).value || "",
+            child_age: (form.querySelector("input[name='child_age']") || {}).value || "",
+          };
+
+          const leads = saveLeadLocally(lead);
+          if (AUTO_DOWNLOAD_LEAD_CSV) {
+            downloadCsv(leadsToCsv(leads));
+          }
+
+          await sendLeadToEndpoint(lead);
+          if (!BOOK_DOWNLOAD_URL.startsWith("http")) return;
 
           const link = document.createElement("a");
           link.href = BOOK_DOWNLOAD_URL;
