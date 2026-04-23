@@ -667,7 +667,11 @@
         }
 
         .grid-3 {
-          grid-template-columns: 1fr;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .grid-3 .card:last-child {
+          grid-column: 1 / -1;
         }
 
         .life-grid {
@@ -787,8 +791,12 @@
       }
 
       .grid-3 {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.55rem;
+      }
+
+      .grid-3 .card:last-child {
+        grid-column: 1 / -1;
       }
 
       .card {
@@ -830,6 +838,11 @@
         line-height: 1.3;
         color: #243504;
         text-align: center;
+      }
+
+      .offer-highlight {
+        padding: 0.52rem 0.95rem;
+        font-size: 1.32rem;
       }
 
       .offer-note {

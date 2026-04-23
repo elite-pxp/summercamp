@@ -670,7 +670,11 @@
         }
 
         .grid-3 {
-          grid-template-columns: 1fr;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .grid-3 .card:last-child {
+          grid-column: 1 / -1;
         }
 
         .life-grid {
@@ -720,6 +724,11 @@
           line-height: 1.15;
           border-radius: 12px;
           white-space: normal;
+        }
+
+        .offer-highlight {
+          padding: 0.52rem 0.95rem;
+          font-size: 1.32rem;
         }
 
         .cta-grid {
