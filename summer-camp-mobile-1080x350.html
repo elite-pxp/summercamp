@@ -669,6 +669,19 @@
         border-radius: 30px;
         padding: 1.7rem;
         box-shadow: 0 14px 30px rgba(35, 37, 18, 0.12);
+        animation: ebook-flash 1.6s ease-in-out infinite;
+      }
+
+      @keyframes ebook-flash {
+        0%,
+        100% {
+          box-shadow: 0 14px 30px rgba(35, 37, 18, 0.12);
+          filter: brightness(1);
+        }
+        50% {
+          box-shadow: 0 16px 34px rgba(228, 190, 48, 0.45);
+          filter: brightness(1.08);
+        }
       }
 
       .eyebrow {
@@ -1311,9 +1324,14 @@
         <div class="cta-grid">
           <article class="tour-card">
             <p class="eyebrow">Book a Tour</p>
-            <h3 class="panel-title">Visit before you register</h3>
+            <h3 class="panel-title">Book a Tour at Elite Children Learning Center</h3>
             <p class="panel-copy">
-              Book directly below to reserve a tour, ask questions, and feel confident before enrolling.
+              We can't wait to meet you! Pick your preferred date and come experience the fun, learning, and energy
+              of our center firsthand.
+            </p>
+            <p class="panel-copy">
+              Schedule your tour to explore our classrooms, discover our programs, and see what makes Elite Children
+              Learning Center so special!
             </p>
             <div class="schedule-embed-wrap">
               <div
