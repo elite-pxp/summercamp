@@ -346,10 +346,17 @@ export default function ECLCSummerCampLandingPage() {
               <iframe
                 title="ECLC Live Scheduler"
                 src={`${calendlyLink}?hide_event_type_details=1&hide_gdpr_banner=1`}
-                className="h-[360px] w-full"
+                className="h-[680px] w-full sm:h-[360px]"
                 frameBorder="0"
               />
             </div>
+            <p className="mt-3 text-sm text-[#33481a] sm:text-base">
+              If the calendar does not load on your phone,{" "}
+              <a href={calendlyLink} className="font-extrabold text-[#1f3600]" {...externalLinkProps}>
+                tap here to open booking
+              </a>
+              .
+            </p>
           </div>
 
           <div id="kids-wealth-book-form" className="rounded-[2rem] bg-[#e6cf63] p-6 shadow-xl sm:p-8">
