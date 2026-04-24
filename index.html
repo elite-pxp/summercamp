@@ -31,8 +31,51 @@
         margin: 0;
         font-family: var(--font-body);
         color: var(--text);
-        background: var(--bg-cream);
+        background-color: #faf5e3;
+        background-image:
+          linear-gradient(rgba(250, 245, 227, 0.9), rgba(250, 245, 227, 0.9)),
+          url("https://res.cloudinary.com/dozcy2jve/image/upload/v1777043522/global-image-library/Summer_4_jdkimd.png");
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
         overflow-x: auto;
+      }
+
+      .site-canvas,
+      .hero,
+      .mobile-action-row,
+      .info,
+      .calendar-showcase,
+      .cta-wrap,
+      .final-cta,
+      .site-footer {
+        background: transparent !important;
+      }
+
+      .info::before {
+        display: none;
+      }
+
+      .final-cta h2,
+      .final-cta p,
+      .action-c,
+      .site-footer-title,
+      .site-footer-sub,
+      .site-footer-contact {
+        color: #243504 !important;
+      }
+
+      .action-c {
+        border-color: #243504 !important;
+      }
+
+      .site-footer {
+        border-color: #d6d1bd;
+      }
+
+      .site-footer-top {
+        background: #e7ddba;
       }
 
       h1,
@@ -206,6 +249,10 @@
         padding: 1.15rem;
         box-shadow: 0 10px 24px rgba(35, 37, 18, 0.1);
         height: 100%;
+      }
+
+      .referral-card {
+        cursor: zoom-in;
       }
 
       .card-icon {
@@ -440,6 +487,88 @@
         color: #ead268;
       }
 
+      .calendar-showcase {
+        background: #efecdf;
+        padding: 1.6rem 0 1.1rem;
+      }
+
+      .calendar-title {
+        margin: 0.4rem 0 0.5rem;
+        font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+        color: #1f300d;
+      }
+
+      .calendar-copy {
+        margin: 0;
+        color: #33481a;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
+      .calendar-grid {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.9rem;
+      }
+
+      .calendar-card {
+        margin: 0;
+        padding: 0.55rem;
+        background: #f8f6ee;
+        border: 2px solid #d5dcc3;
+        border-radius: 18px;
+        box-shadow: 0 10px 20px rgba(35, 37, 18, 0.1);
+      }
+
+      .calendar-card img {
+        width: 100%;
+        display: block;
+        border-radius: 12px;
+        cursor: zoom-in;
+      }
+
+      .image-lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(18, 24, 8, 0.82);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        z-index: 9999;
+      }
+
+      .image-lightbox.is-open {
+        display: flex;
+      }
+
+      .image-lightbox img {
+        max-width: min(100%, 1100px);
+        max-height: 92vh;
+        width: auto;
+        height: auto;
+        border-radius: 14px;
+        border: 3px solid #e7d26b;
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+      }
+
+      .image-lightbox-close {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        width: 40px;
+        height: 40px;
+        border: 0;
+        border-radius: 999px;
+        font-size: 1.4rem;
+        line-height: 1;
+        cursor: pointer;
+        background: #f7f3e8;
+        color: #243504;
+        font-weight: 900;
+      }
+
       .cta-wrap {
         background: #ece9de;
         padding: 1.5rem 0 0;
@@ -663,6 +792,10 @@
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
+        .referral-card {
+          grid-column: 1 / -1;
+        }
+
         .life-grid {
           grid-template-columns: 1fr;
         }
@@ -725,6 +858,10 @@
         }
 
         .cta-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .calendar-grid {
           grid-template-columns: 1fr;
         }
 
@@ -837,6 +974,16 @@
             <div class="card-meta">Beginner-friendly money lessons</div>
             <div class="card-meta">Age-appropriate group activities</div>
           </article>
+          <article class="card referral-card" data-preview-src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777043293/global-image-library/Referal_Programpng_oaaod2.png" data-preview-alt="Referral program details poster">
+            <div class="card-head">
+              <div class="card-head-left">
+                <img class="card-icon" src="https://res.cloudinary.com/dozcy2jve/image/upload/v1776968200/global-image-library/9_j8ifg2.png" alt="Referral icon" />
+                <h3>Referral Program</h3>
+              </div>
+            </div>
+            <div class="card-sub">Refer a friend, get rewarded</div>
+            <div class="card-meta">Tap to preview the full referral details</div>
+          </article>
         </div>
 
         <div class="life-shell">
@@ -891,6 +1038,27 @@
         </div>
       </div>
     </section>
+
+    <section class="calendar-showcase">
+      <div class="container">
+        <p class="eyebrow">Camp Activities</p>
+        <h3 class="calendar-title">Our Summer Fun Calendar</h3>
+        <p class="calendar-copy">See the exciting weekly adventures your child can enjoy.</p>
+        <div class="calendar-grid">
+          <figure class="calendar-card">
+            <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg" alt="Summer camp activity calendar image 1" loading="lazy" />
+          </figure>
+          <figure class="calendar-card">
+            <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg" alt="Summer camp activity calendar image 2" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <div class="image-lightbox" id="image-lightbox" aria-hidden="true">
+      <button class="image-lightbox-close" id="image-lightbox-close" aria-label="Close image preview">x</button>
+      <img id="image-lightbox-img" src="" alt="Expanded calendar preview" />
+    </div>
 
     <section class="cta-wrap">
       <div class="container">
@@ -959,6 +1127,48 @@
       </div>
     </footer>
     </div>
+    <script>
+      (function () {
+        const lightbox = document.getElementById("image-lightbox");
+        const lightboxImg = document.getElementById("image-lightbox-img");
+        const closeBtn = document.getElementById("image-lightbox-close");
+        const clickableImages = document.querySelectorAll(".calendar-card img");
+        const referralCards = document.querySelectorAll(".referral-card[data-preview-src]");
+        if (!lightbox || !lightboxImg || !closeBtn || (!clickableImages.length && !referralCards.length)) return;
+
+        const closeLightbox = function () {
+          lightbox.classList.remove("is-open");
+          lightbox.setAttribute("aria-hidden", "true");
+          lightboxImg.src = "";
+        };
+
+        clickableImages.forEach(function (img) {
+          img.addEventListener("click", function () {
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt || "Expanded calendar preview";
+            lightbox.classList.add("is-open");
+            lightbox.setAttribute("aria-hidden", "false");
+          });
+        });
+
+        referralCards.forEach(function (card) {
+          card.addEventListener("click", function () {
+            lightboxImg.src = card.getAttribute("data-preview-src");
+            lightboxImg.alt = card.getAttribute("data-preview-alt") || "Expanded referral preview";
+            lightbox.classList.add("is-open");
+            lightbox.setAttribute("aria-hidden", "false");
+          });
+        });
+
+        closeBtn.addEventListener("click", closeLightbox);
+        lightbox.addEventListener("click", function (event) {
+          if (event.target === lightbox) closeLightbox();
+        });
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape") closeLightbox();
+        });
+      })();
+    </script>
     <script>
       (function () {
         const BOOK_DOWNLOAD_URL = "#kids-wealth-book-download";
