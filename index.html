@@ -7,9 +7,17 @@
     <style>
       @font-face {
         font-family: "Playpen Sans Custom";
-        src: url("./assets/fonts/PlaypenSans-wght-2.ttf") format("truetype");
+        src: url("./assets/fonts/PlaypenSans-wght.ttf") format("truetype");
         font-style: normal;
         font-weight: 100 900;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "MotterCorpusStd";
+        src: url("./assets/fonts/MotterCorpusStd-SemiCond.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 600;
         font-display: swap;
       }
 
@@ -19,8 +27,8 @@
         --olive-dark: #243504;
         --gold: #f0c83b;
         --text: #21310f;
-        --font-body: "Playpen Sans Custom", "Trebuchet MS", "Segoe UI", Arial, sans-serif;
-        --font-display: "Playpen Sans Custom", "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+        --font-body: "MotterCorpusStd", "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+        --font-display: "MotterCorpusStd", "Trebuchet MS", "Segoe UI", Arial, sans-serif;
       }
 
       * {
@@ -48,7 +56,6 @@
       .info,
       .calendar-showcase,
       .cta-wrap,
-      .final-cta,
       .site-footer {
         background: transparent !important;
       }
@@ -57,18 +64,13 @@
         display: none;
       }
 
-      .final-cta h2,
-      .final-cta p,
-      .action-c,
       .site-footer-title,
       .site-footer-sub,
       .site-footer-contact {
         color: #243504 !important;
       }
 
-      .action-c {
-        border-color: #243504 !important;
-      }
+      
 
       .site-footer {
         border-color: #d6d1bd;
@@ -122,7 +124,7 @@
       }
 
       .top-menu-text {
-        font-size: 0.8rem;
+        font-size: 0.92rem;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 0.04em;
@@ -164,13 +166,31 @@
         }
       }
 
-      .button-animated {
+      .button-animated,
+      .btn,
+      .weekly-actions .btn,
+      .final-actions a,
+      .download-form button,
+      .image-lightbox-close {
         transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
       }
 
-      .button-animated:hover {
+      .button-animated:hover,
+      .btn:hover,
+      .weekly-actions .btn:hover,
+      .final-actions a:hover,
+      .download-form button:hover,
+      .image-lightbox-close:hover {
         transform: translateY(-5px) scale(1.02);
         filter: brightness(1.02);
+      }
+
+      .btn:active,
+      .weekly-actions .btn:active,
+      .final-actions a:active,
+      .download-form button:active,
+      .image-lightbox-close:active {
+        transform: translateY(-1px) scale(0.99);
       }
 
       .btn-primary {
@@ -204,6 +224,60 @@
 
       .hero-controls {
         margin-bottom: 1rem;
+      }
+
+      .weekly-strip {
+        padding: 0.65rem 0 0.45rem;
+      }
+
+      .weekly-strip-card {
+        margin: 0;
+        padding: 0;
+        border-radius: 18px;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .weekly-strip-card img {
+        display: block;
+        width: 100%;
+        border-radius: 12px;
+        cursor: zoom-in;
+        animation: weekly-banner-float 3.2s ease-in-out infinite;
+        transform-origin: center center;
+      }
+
+      @keyframes weekly-banner-float {
+        0% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-4px) scale(1.01);
+        }
+        100% {
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .weekly-actions {
+        margin-top: 0.6rem;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+      }
+
+      .weekly-actions .btn {
+        width: 100%;
+        min-height: 80px;
+        padding: 1.05rem 0.75rem;
+        font-size: clamp(1.2rem, 2vw, 1.55rem);
+        line-height: 1.28;
+        white-space: normal;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
       }
 
       .mobile-action-row {
@@ -320,6 +394,12 @@
         font-weight: 700;
         color: #243504;
         text-align: center;
+      }
+
+      .age-group-sub {
+        font-size: clamp(1.24rem, 2.2vw, 1.58rem);
+        line-height: 1.16;
+        font-weight: 900;
       }
 
       .card-meta {
@@ -684,7 +764,7 @@
         position: relative;
         overflow: hidden;
         margin-top: 2rem;
-        background: #1f3a00;
+        background: #243504;
         background-size: cover;
         background-position: center;
         padding: 3rem 0 3.3rem;
@@ -716,10 +796,16 @@
 
       .final-actions a {
         border-radius: 16px;
-        padding: 0.9rem 1.2rem;
+        padding: 1.05rem 1.4rem;
         text-decoration: none;
         font-weight: 800;
         min-width: 190px;
+        min-height: 72px;
+        font-size: clamp(1.05rem, 1.45vw, 1.25rem);
+        line-height: 1.2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .action-a {
@@ -761,7 +847,7 @@
 
       .site-footer-title {
         margin: 0;
-        font-size: 1rem;
+        font-size: 1.18rem;
         line-height: 1.2;
         font-weight: 900;
         color: #ffffff;
@@ -769,14 +855,14 @@
 
       .site-footer-sub {
         margin: 0.12rem 0 0;
-        font-size: 0.74rem;
+        font-size: 0.94rem;
         line-height: 1.2;
         color: rgba(255, 255, 255, 0.82);
       }
 
       .site-footer-contact {
         margin: 0;
-        font-size: 0.74rem;
+        font-size: 0.96rem;
         line-height: 1.2;
         color: rgba(255, 255, 255, 0.82);
         text-align: right;
@@ -914,7 +1000,7 @@
         <img
           src="https://res.cloudinary.com/dozcy2jve/image/upload/v1776955821/global-image-library/Elite_Logo_Transpatent_wlro3b.png"
           alt="ECLC logo"
-          style="width: 34px; height: 34px; object-fit: contain;"
+          style="width: 40px; height: 40px; object-fit: contain;"
         />
         <div class="top-menu-text">Elite Children Learning Center</div>
       </div>
@@ -927,26 +1013,39 @@
           <img class="hero-poster" src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042325/global-image-library/Summer_2_rw4oqn.png" alt="Summer Camp hero visual" />
         </picture>
       </div>
-      <div class="container hero-inner">
-        <div class="hero-controls">
-          <div class="actions">
-            <a class="btn btn-primary button-animated" href="https://schools.procareconnect.com/form/1b671d16-c3a3-4db9-8944-ab5bf18a4964" target="_blank" rel="noopener noreferrer">Register Austell</a>
-            <a class="btn btn-secondary button-animated" href="https://schools.procareconnect.com/form/f422dd04-cc44-4906-a7e3-46dbd0f83177" target="_blank" rel="noopener noreferrer">Register Mableton</a>
-            <a class="btn btn-outline button-animated" href="https://calendly.com/aadmin-eliteschildren/30min" target="_blank" rel="noopener noreferrer">Book a Tour</a>
-          </div>
-        </div>
-      </div>
+      <div class="container hero-inner"></div>
     </section>
 
-    <section class="mobile-action-row">
+    <section class="weekly-strip">
       <div class="container">
-        <div class="actions">
+        <figure class="weekly-strip-card">
+          <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777046391/global-image-library/JUNE_1_rcjp02.png" alt="This week summer camp animation highlight" loading="lazy" />
+        </figure>
+        <div class="weekly-actions">
           <a class="btn btn-primary button-animated" href="https://schools.procareconnect.com/form/1b671d16-c3a3-4db9-8944-ab5bf18a4964" target="_blank" rel="noopener noreferrer">Register Austell</a>
           <a class="btn btn-secondary button-animated" href="https://schools.procareconnect.com/form/f422dd04-cc44-4906-a7e3-46dbd0f83177" target="_blank" rel="noopener noreferrer">Register Mableton</a>
           <a class="btn btn-outline button-animated" href="https://calendly.com/aadmin-eliteschildren/30min" target="_blank" rel="noopener noreferrer">Book a Tour</a>
         </div>
       </div>
     </section>
+
+    <section class="calendar-showcase">
+      <div class="container">
+        <p class="eyebrow">Camp Activities</p>
+        <h3 class="calendar-title">Our Summer Fun Calendar</h3>
+        <p class="calendar-copy">What adventure will your child choose this week?</p>
+        <div class="calendar-grid">
+          <figure class="calendar-card">
+            <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg" alt="Summer camp activity calendar image 1" loading="lazy" />
+          </figure>
+          <figure class="calendar-card">
+            <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042598/global-image-library/Cal2_ko1pac.jpg" alt="Summer camp activity calendar image 2" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+
 
     <section class="info">
       <div class="container">
@@ -970,9 +1069,7 @@
               </div>
               <div class="card-right-value">5+</div>
             </div>
-            <div class="card-sub">Kindergarten and up</div>
-            <div class="card-meta">Beginner-friendly money lessons</div>
-            <div class="card-meta">Age-appropriate group activities</div>
+            <div class="card-sub age-group-sub">for kindergarten and school aged kids</div>
           </article>
           <article class="card referral-card" data-preview-src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777043293/global-image-library/Referal_Programpng_oaaod2.png" data-preview-alt="Referral program details poster">
             <div class="card-head">
@@ -1035,22 +1132,6 @@
           <div class="life-callout">
             Little Learners Wealth Institute helps children earn, save, and invest through age-appropriate learning in a fun summer camp setting.
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="calendar-showcase">
-      <div class="container">
-        <p class="eyebrow">Camp Activities</p>
-        <h3 class="calendar-title">Our Summer Fun Calendar</h3>
-        <p class="calendar-copy">See the exciting weekly adventures your child can enjoy.</p>
-        <div class="calendar-grid">
-          <figure class="calendar-card">
-            <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg" alt="Summer camp activity calendar image 1" loading="lazy" />
-          </figure>
-          <figure class="calendar-card">
-            <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg" alt="Summer camp activity calendar image 2" loading="lazy" />
-          </figure>
         </div>
       </div>
     </section>
@@ -1132,7 +1213,7 @@
         const lightbox = document.getElementById("image-lightbox");
         const lightboxImg = document.getElementById("image-lightbox-img");
         const closeBtn = document.getElementById("image-lightbox-close");
-        const clickableImages = document.querySelectorAll(".calendar-card img");
+        const clickableImages = document.querySelectorAll(".calendar-card img, .weekly-strip img");
         const referralCards = document.querySelectorAll(".referral-card[data-preview-src]");
         if (!lightbox || !lightboxImg || !closeBtn || (!clickableImages.length && !referralCards.length)) return;
 
