@@ -5,12 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Summer Camp 2026 - Client Preview</title>
     <style>
+      @font-face {
+        font-family: "Playpen Sans Custom";
+        src: url("./assets/fonts/PlaypenSans-wght-2.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
       :root {
         --bg-cream: #f7f3e8;
         --olive: #6b8310;
         --olive-dark: #243504;
         --gold: #f0c83b;
         --text: #21310f;
+        --font-body: "Playpen Sans Custom", "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+        --font-display: "Playpen Sans Custom", "Trebuchet MS", "Segoe UI", Arial, sans-serif;
       }
 
       * {
@@ -19,10 +29,20 @@
 
       body {
         margin: 0;
-        font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+        font-family: var(--font-body);
         color: var(--text);
         background: var(--bg-cream);
         overflow-x: auto;
+      }
+
+      h1,
+      h2,
+      h3,
+      .btn,
+      .panel-title,
+      .top-menu-text,
+      .card-right-value {
+        font-family: var(--font-display);
       }
 
       .site-canvas {
@@ -157,7 +177,7 @@
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
-        font-family: "Trebuchet MS", "Comic Sans MS", "Segoe UI", sans-serif;
+        font-family: var(--font-body);
       }
 
       .info::before {
