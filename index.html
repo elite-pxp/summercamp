@@ -90,6 +90,11 @@
         font-family: var(--font-display);
       }
 
+      p {
+        font-family: "Playpen Sans Custom", "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+        font-weight: 600;
+      }
+
       .site-canvas {
         width: 1366px;
         min-height: 768px;
@@ -280,6 +285,18 @@
         text-align: center;
       }
 
+      .weekly-actions .btn-outline {
+        font-size: 2em;
+      }
+
+      .weekly-actions .btn-primary,
+      .weekly-actions .btn-secondary {
+        color: #fbf6e4;
+        -webkit-text-stroke: 0.5px #000000;
+        text-shadow: 0 0 1px #000000;
+        font-size: 2.1rem;
+      }
+
       .weekly-strip .grid-3 {
         margin-top: 0.9rem;
       }
@@ -364,6 +381,30 @@
 
       .referral-card {
         cursor: zoom-in;
+        background: #f2c94c;
+        border-color: #d7a91f;
+      }
+
+      .referral-card h3 {
+        font-size: 1.56rem;
+      }
+
+      .referral-card .card-sub {
+        margin-top: 0.2rem;
+        font-size: 1.2rem;
+        line-height: 1.12;
+              color: #ffffff;
+              -webkit-text-stroke: 0.5px #000000;
+        text-shadow: 0 0 1px #000000;
+      }
+
+      .referral-card .card-meta {
+        margin-top: 0.22rem;
+        font-size: 1.1rem;
+        line-height: 1.12;
+              color: #ffffff;
+              -webkit-text-stroke: 0.5px #000000;
+        text-shadow: 0 0 1px #000000;
       }
 
       .card-icon {
@@ -378,7 +419,7 @@
       .card h3 {
         margin: 0 0 0.45rem;
         font-size: 1.22rem;
-        color: var(--olive);
+        color: #113501;
         text-transform: uppercase;
       }
 
@@ -413,7 +454,7 @@
         margin: 0;
         line-height: 1.55;
         font-size: 1.02rem;
-        font-weight: 700;
+        font-weight: 900;
         color: #243504;
       }
 
@@ -428,7 +469,7 @@
       .card-sub {
         margin-top: 0.3rem;
         font-size: 1.12rem;
-        font-weight: 700;
+        font-weight: 900;
         color: #243504;
         text-align: center;
       }
@@ -440,11 +481,11 @@
       }
 
       .card-meta {
-        margin-top: 0.45rem;
-        font-size: 1.12rem;
-        line-height: 1.4;
+        margin-top: 0.32rem;
+        font-size: 1.22rem;
+        line-height: 1.18;
         color: #243504;
-        font-weight: 700;
+        font-weight: 900;
         text-align: center;
       }
 
@@ -506,8 +547,11 @@
 
       .life-card h3 {
         margin: 0;
-        color: #5f7615;
-        font-size: 1.45rem;
+        color: #1f3600;
+        font-family: "MotterCorpusStd", "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+        font-size: 1.42rem;
+        line-height: 1.18;
+        font-weight: 900;
         display: flex;
         align-items: center;
         gap: 0.55rem;
@@ -543,8 +587,9 @@
         background: #f8f6ee;
         border: 1px solid #d9decc;
         padding: 0.65rem 0.7rem;
-        font-size: 0.92rem;
-        font-weight: 800;
+        font-size: 1.2rem;
+        font-family: "Playpen Sans Custom", "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+        font-weight: 700;
         color: #304519;
         display: flex;
         align-items: flex-start;
@@ -567,11 +612,13 @@
 
       .life-note-kicker {
         margin: 0;
-        font-size: 0.82rem;
+        font-family: "MotterCorpusStd", "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+        font-size: 1.42rem !important;
+        line-height: 1.06;
         font-weight: 900;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.02em;
         text-transform: uppercase;
-        color: #5f7615;
+        color: #1f3600;
       }
 
       .life-note-kicker-wrap {
@@ -625,15 +672,17 @@
 
       .calendar-title {
         margin: 0.4rem 0 0.5rem;
-        font-size: clamp(1.7rem, 2.6vw, 2.4rem);
-        color: #f4f0da;
+        font-size: 2.4rem;
+        color: #f9c237;
+        -webkit-text-stroke: 0.6px #000000;
+        text-shadow: 0 0 1px #000000;
       }
 
       .calendar-copy {
         margin: 0;
         color: #dce7bf;
         font-size: 1rem;
-        font-weight: 700;
+        font-weight: 900;
       }
 
       .calendar-grid {
@@ -693,8 +742,10 @@
       .image-lightbox img {
         max-width: min(96vw, 1320px);
         max-height: 96vh;
-        width: min(96vw, 1320px);
+        width: auto;
         height: auto;
+        object-fit: contain;
+        aspect-ratio: auto;
         border-radius: 14px;
         border: 3px solid #e7d26b;
         box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
@@ -1347,7 +1398,7 @@
     </script>
     <script>
       (function () {
-        const BOOK_DOWNLOAD_URL = window.ECLC_BOOK_DOWNLOAD_URL || "#kids-wealth-book-download";
+        const BOOK_DOWNLOAD_URL = window.ECLC_BOOK_DOWNLOAD_URL || "https://drive.google.com/drive/folders/1vRir92hDIw69ClCyHSVZd39DRDCa4Kkb?usp=sharing";
         const LEAD_LOG_ENDPOINT = window.ECLC_LEAD_LOG_ENDPOINT || "";
         const LEAD_STORAGE_KEY = "eclc_kids_book_leads_v1";
         const LEAD_STORAGE_BACKUP_KEY = "eclc_kids_book_leads_backup_v1";
