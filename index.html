@@ -280,6 +280,10 @@
         text-align: center;
       }
 
+      .weekly-strip .grid-3 {
+        margin-top: 0.9rem;
+      }
+
       .intro-advantage-card {
         margin-top: 0.85rem;
         padding: 1rem 1.15rem;
@@ -321,7 +325,7 @@
 
       .info {
         position: relative;
-        padding: 2.2rem 0;
+        padding: 0.7rem 0 2.2rem;
         background-image: url("https://cdn.jsdelivr.net/gh/juniper1947/global-image-library@main/docs/uploads/2026-04-eclc-summer-camp-assets/05-section-background-from-board.png");
         background-attachment: fixed;
         background-position: center;
@@ -602,18 +606,32 @@
 
       .calendar-showcase {
         background: #efecdf;
-        padding: 1.6rem 0 1.1rem;
+        padding: 1.6rem 0 0.55rem;
+      }
+
+      .calendar-shell {
+        background: rgba(36, 53, 4, 0.8);
+        border: 1px solid #3b5320;
+        border-radius: 24px;
+        padding: 1.2rem 1.1rem 1.15rem;
+        box-shadow: 0 12px 28px rgba(18, 26, 5, 0.35);
+        animation: calendar-shell-wave 6.8s ease-in-out infinite;
+        transform-origin: center top;
+      }
+
+      .calendar-shell .eyebrow {
+        color: #d6c66e;
       }
 
       .calendar-title {
         margin: 0.4rem 0 0.5rem;
         font-size: clamp(1.7rem, 2.6vw, 2.4rem);
-        color: #1f300d;
+        color: #f4f0da;
       }
 
       .calendar-copy {
         margin: 0;
-        color: #33481a;
+        color: #dce7bf;
         font-size: 1rem;
         font-weight: 700;
       }
@@ -628,10 +646,10 @@
       .calendar-card {
         margin: 0;
         padding: 0.55rem;
-        background: #f8f6ee;
-        border: 2px solid #d5dcc3;
+        background: #f6f4ea;
+        border: 2px solid #9dad80;
         border-radius: 18px;
-        box-shadow: 0 10px 20px rgba(35, 37, 18, 0.1);
+        box-shadow: 0 8px 18px rgba(15, 22, 6, 0.3);
       }
 
       .calendar-card img {
@@ -639,6 +657,22 @@
         display: block;
         border-radius: 12px;
         cursor: zoom-in;
+      }
+
+      @keyframes calendar-shell-wave {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        25% {
+          transform: translateY(-2px) rotate(-0.35deg);
+        }
+        50% {
+          transform: translateY(0) rotate(0.35deg);
+        }
+        75% {
+          transform: translateY(-1px) rotate(-0.22deg);
+        }
       }
 
       .image-lightbox {
@@ -1037,6 +1071,12 @@
           text-align: center;
         }
       }
+
+      @media (prefers-reduced-motion: reduce) {
+        .calendar-shell {
+          animation: none;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1081,29 +1121,6 @@
             This summer, give your child more than fun. Give them practical life skills that many adults wish they had learned earlier. At Elite Children Learning Center Summer Camp 2026, children learn how money works through hands-on experiences that help build confidence, responsibility, and smart decision-making.
           </p>
         </article>
-      </div>
-    </section>
-
-    <section class="calendar-showcase">
-      <div class="container">
-        <p class="eyebrow">Camp Activities</p>
-        <h3 class="calendar-title">Our Summer Fun Calendar</h3>
-        <p class="calendar-copy">What adventure will your child choose this week?</p>
-        <div class="calendar-grid">
-          <figure class="calendar-card">
-            <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg" alt="Summer camp activity calendar image 1" loading="lazy" />
-          </figure>
-          <figure class="calendar-card">
-            <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042598/global-image-library/Cal2_ko1pac.jpg" alt="Summer camp activity calendar image 2" loading="lazy" />
-          </figure>
-        </div>
-      </div>
-    </section>
-
-
-
-    <section class="info">
-      <div class="container">
         <div class="grid-3">
           <article class="card">
             <div class="card-head">
@@ -1137,7 +1154,31 @@
             <div class="card-meta">Tap to preview the full referral details</div>
           </article>
         </div>
+      </div>
+    </section>
 
+    <section class="calendar-showcase">
+      <div class="container">
+        <div class="calendar-shell">
+          <p class="eyebrow">Camp Activities</p>
+          <h3 class="calendar-title">Our Summer Fun Calendar</h3>
+          <p class="calendar-copy">What adventure will your child choose this week?</p>
+          <div class="calendar-grid">
+            <figure class="calendar-card">
+              <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg" alt="Summer camp activity calendar image 1" loading="lazy" />
+            </figure>
+            <figure class="calendar-card">
+              <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042598/global-image-library/Cal2_ko1pac.jpg" alt="Summer camp activity calendar image 2" loading="lazy" />
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="info">
+      <div class="container">
         <div class="life-shell">
 
           <div class="life-grid">
