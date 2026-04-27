@@ -759,15 +759,21 @@
         position: absolute;
         inset: 0;
         opacity: 0;
-        transform: scale(1.015);
-        transition: opacity 380ms ease, transform 380ms ease;
+        transform: translateX(22px) scale(1.01);
+        filter: saturate(0.94);
+        transition:
+          opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+          transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+          filter 900ms cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: opacity, transform, filter;
         pointer-events: none;
         background: #101806;
       }
 
       .media-slide.is-active {
         opacity: 1;
-        transform: scale(1);
+        transform: translateX(0) scale(1);
+        filter: saturate(1);
         pointer-events: auto;
       }
 
@@ -1408,9 +1414,6 @@
           transform: none !important;
         }
 
-        .media-slide {
-          transition: none;
-        }
       }
 
       .mobile-action-row .btn {
@@ -1690,38 +1693,50 @@
         <div class="calendar-shell">
           <p class="eyebrow">Camp Activities</p>
           <h3 class="calendar-title">Camp Highlights</h3>
-          <p class="calendar-copy">Watch our latest camp reels and activity moments.</p>
+          <p class="calendar-copy">Browse our latest camp activity moments.</p>
           <div class="media-carousel" data-media-carousel>
             <div class="media-carousel-viewport">
-              <figure class="media-slide media-slide-instagram is-active">
-                <div class="instagram-shell">
-                  <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/C8cHKCQhSDt/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
-                    <a href="https://www.instagram.com/reel/C8cHKCQhSDt/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener noreferrer">View this post on Instagram</a>
-                  </blockquote>
-                </div>
-              </figure>
-              <figure class="media-slide media-slide-instagram">
-                <div class="instagram-shell">
-                  <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/C8rhhdmBpun/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
-                    <a href="https://www.instagram.com/reel/C8rhhdmBpun/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener noreferrer">View this post on Instagram</a>
-                  </blockquote>
-                </div>
-              </figure>
-              <figure class="media-slide media-slide-instagram">
-                <div class="instagram-shell">
-                  <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/C9DODiJJMYc/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
-                    <a href="https://www.instagram.com/reel/C9DODiJJMYc/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener noreferrer">View this post on Instagram</a>
-                  </blockquote>
-                </div>
+              <figure class="media-slide is-active">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321118/global-image-library/WhatsApp_Image_2026-04-28_at_00.28.34_2_squvsn.jpg" alt="Camp highlight photo 1" loading="lazy" />
               </figure>
               <figure class="media-slide">
-                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777300279/global-image-library/WhatsApp_Image_2026-04-27_at_22.30.35_hipxvi.jpg" alt="Camp highlight photo from April 27, 2026" loading="lazy" />
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321083/global-image-library/WhatsApp_Image_2026-04-28_at_00.11.09_xnrw26.jpg" alt="Camp highlight photo 2" loading="lazy" />
               </figure>
               <figure class="media-slide">
-                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777300312/global-image-library/Referal_Programpng_fhft16.png" alt="Referral program flyer" loading="lazy" />
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321123/global-image-library/WhatsApp_Image_2026-04-28_at_00.28.52_da3iel.jpg" alt="Camp highlight photo 3" loading="lazy" />
               </figure>
               <figure class="media-slide">
-                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777300348/global-image-library/WhatsApp_Image_2026-04-27_at_22.31.05_xv6ovo.jpg" alt="Camp activity photo from April 27, 2026" loading="lazy" />
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321099/global-image-library/WhatsApp_Image_2026-04-28_at_00.11.42_z9pdh9.jpg" alt="Camp highlight photo 4" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321126/global-image-library/WhatsApp_Image_2026-04-28_at_00.29.06_snpbb4.jpg" alt="Camp highlight photo 5" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321114/global-image-library/WhatsApp_Image_2026-04-28_at_00.27.49_pwipfr.jpg" alt="Camp highlight photo 6" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321086/global-image-library/WhatsApp_Image_2026-04-28_at_00.11.20_oyuyf7.jpg" alt="Camp highlight photo 7" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321116/global-image-library/WhatsApp_Image_2026-04-28_at_00.28.34_1_tf3ybn.jpg" alt="Camp highlight photo 8" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321109/global-image-library/WhatsApp_Image_2026-04-28_at_00.12.42_fq4wff.jpg" alt="Camp highlight photo 9" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321102/global-image-library/WhatsApp_Image_2026-04-28_at_00.11.57_mwufo4.jpg" alt="Camp highlight photo 10" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321111/global-image-library/WhatsApp_Image_2026-04-28_at_00.12.42_1_enm3dq.jpg" alt="Camp highlight photo 11" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321094/global-image-library/WhatsApp_Image_2026-04-28_at_00.11.29_f5jtww.jpg" alt="Camp highlight photo 12" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321105/global-image-library/WhatsApp_Image_2026-04-28_at_00.13.19_1_baxmjv.jpg" alt="Camp highlight photo 13" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321121/global-image-library/WhatsApp_Image_2026-04-28_at_00.28.34_ofqrlz.jpg" alt="Camp highlight photo 14" loading="lazy" />
               </figure>
               <button type="button" class="media-arrow media-arrow-prev" aria-label="Previous slide">&lt;</button>
               <button type="button" class="media-arrow media-arrow-next" aria-label="Next slide">&gt;</button>
@@ -1733,6 +1748,14 @@
               <button type="button" class="media-dot" aria-label="Show slide 4"></button>
               <button type="button" class="media-dot" aria-label="Show slide 5"></button>
               <button type="button" class="media-dot" aria-label="Show slide 6"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 7"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 8"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 9"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 10"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 11"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 12"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 13"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 14"></button>
             </div>
           </div>
           <div class="calendar-grid">
@@ -1897,49 +1920,10 @@
       </div>
     </footer>
     </div>
-    <script async src="https://www.instagram.com/embed.js"></script>
     <script>
       (function () {
-        const instagramShells = document.querySelectorAll(".instagram-shell");
-        instagramShells.forEach(function (shell) {
-          if (shell.querySelector("iframe")) return;
-          const blockquote = shell.querySelector(".instagram-media");
-          if (!blockquote) return;
-
-          const fallbackLink = blockquote.querySelector("a");
-          const permalink = blockquote.getAttribute("data-instgrm-permalink") || (fallbackLink ? fallbackLink.href : "");
-          const reelMatch = permalink.match(/instagram\.com\/reel\/([^/?#]+)/i);
-          if (!reelMatch) return;
-
-          const reelId = reelMatch[1];
-          const reelSrc = "https://www.instagram.com/reel/" + reelId + "/embed/?autoplay=1&muted=1";
-          const makeFrame = function (isAmbient) {
-            const frame = document.createElement("iframe");
-            frame.src = reelSrc;
-            frame.title = "Instagram reel " + reelId + (isAmbient ? " ambient" : "");
-            frame.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture; fullscreen");
-            frame.setAttribute("allowfullscreen", "");
-            frame.setAttribute("loading", "lazy");
-            if (isAmbient) frame.setAttribute("tabindex", "-1");
-            return frame;
-          };
-
-          shell.innerHTML = "";
-          shell.appendChild(makeFrame(false));
-
-          const slide = shell.closest(".media-slide-instagram");
-          if (slide && !slide.querySelector(".instagram-ambient")) {
-            const ambient = document.createElement("div");
-            ambient.className = "instagram-ambient";
-            ambient.setAttribute("aria-hidden", "true");
-            ambient.appendChild(makeFrame(true));
-            slide.insertBefore(ambient, shell);
-          }
-        });
-
         const mediaCarousels = document.querySelectorAll("[data-media-carousel]");
         if (mediaCarousels.length) {
-          const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
           mediaCarousels.forEach(function (carousel) {
             const slides = Array.from(carousel.querySelectorAll(".media-slide"));
             const dots = Array.from(carousel.querySelectorAll(".media-dot"));
@@ -1955,26 +1939,8 @@
 
               slides.forEach(function (slide, index) {
                 const isActive = index === activeIndex;
-                const video = slide.querySelector("video");
-                const instagramFrame = slide.querySelector(".instagram-shell iframe");
                 slide.classList.toggle("is-active", isActive);
                 slide.setAttribute("aria-hidden", isActive ? "false" : "true");
-                if (video) {
-                  if (isActive) {
-                    const playPromise = video.play();
-                    if (playPromise && typeof playPromise.catch === "function") {
-                      playPromise.catch(function () {});
-                    }
-                  } else {
-                    video.pause();
-                    video.currentTime = 0;
-                  }
-                }
-
-                if (instagramFrame && isActive) {
-                  const currentSrc = instagramFrame.getAttribute("src") || "";
-                  if (currentSrc) instagramFrame.src = currentSrc;
-                }
               });
 
               dots.forEach(function (dot, index) {
@@ -1990,7 +1956,7 @@
             };
 
             const startAutoplay = function () {
-              if (reduceMotion || slides.length < 2 || autoTimer) return;
+              if (slides.length < 2 || autoTimer) return;
               autoTimer = window.setInterval(function () {
                 setActiveSlide(activeIndex + 1);
               }, 4000);
