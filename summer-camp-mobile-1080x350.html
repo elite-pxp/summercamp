@@ -2081,6 +2081,8 @@
         const leadsToCsv = function (leads) {
           const headers = [
             "submitted_at",
+            "timezone",
+            "utc_offset_minutes",
             "source_page",
             "page_title",
             "parent_name",
@@ -2225,6 +2227,8 @@
           try {
             const lead = {
               submitted_at: new Date().toISOString(),
+              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
+              utc_offset_minutes: new Date().getTimezoneOffset(),
               source_page: window.location.href,
               page_title: document.title || "",
               parent_name: (form.querySelector("input[name='parent_name']") || {}).value || "",
