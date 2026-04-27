@@ -2066,7 +2066,7 @@
         const LEAD_STORAGE_KEY = "eclc_kids_book_leads_v1";
         const LEAD_STORAGE_BACKUP_KEY = "eclc_kids_book_leads_backup_v1";
         const AUTO_DOWNLOAD_LEAD_CSV = window.ECLC_AUTO_DOWNLOAD_LEAD_CSV === true;
-        const AUTO_SUBMIT_ON_COMPLETE = window.ECLC_AUTO_SUBMIT_ON_COMPLETE !== false;
+        const AUTO_SUBMIT_ON_COMPLETE = window.ECLC_AUTO_SUBMIT_ON_COMPLETE === true;
         const form = document.getElementById("kids-book-form");
         const button = document.getElementById("kids-book-download-btn");
         if (!form || !button) return;
