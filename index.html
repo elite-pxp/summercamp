@@ -1793,7 +1793,7 @@
         const LEAD_LOG_ENDPOINT = window.ECLC_LEAD_LOG_ENDPOINT || "";
         const LEAD_STORAGE_KEY = "eclc_kids_book_leads_v1";
         const LEAD_STORAGE_BACKUP_KEY = "eclc_kids_book_leads_backup_v1";
-        const AUTO_DOWNLOAD_LEAD_CSV = window.ECLC_AUTO_DOWNLOAD_LEAD_CSV !== false;
+        const AUTO_DOWNLOAD_LEAD_CSV = window.ECLC_AUTO_DOWNLOAD_LEAD_CSV === true;
         const AUTO_SUBMIT_ON_COMPLETE = window.ECLC_AUTO_SUBMIT_ON_COMPLETE !== false;
         const form = document.getElementById("kids-book-form");
         const button = document.getElementById("kids-book-download-btn");
@@ -1860,6 +1860,22 @@
           link.click();
           document.body.removeChild(link);
           URL.revokeObjectURL(url);
+        };
+
+        const triggerBookDownload = function () {
+          let openedWindow = null;
+          try {
+            openedWindow = window.open(BOOK_DOWNLOAD_URL, "_blank", "noopener,noreferrer");
+          } catch (error) {
+            openedWindow = null;
+          }
+
+          if (openedWindow && typeof openedWindow.focus === "function") {
+            openedWindow.focus();
+            return;
+          }
+
+          window.location.href = BOOK_DOWNLOAD_URL;
         };
 
         const sendLeadToEndpoint = async function (lead) {
@@ -1957,15 +1973,8 @@
               return;
             }
 
+            triggerBookDownload();
             sendLeadToEndpoint(lead);
-            const link = document.createElement("a");
-            link.href = BOOK_DOWNLOAD_URL;
-            link.download = "kids-wealth-book";
-            link.target = "_blank";
-            link.rel = "noopener noreferrer";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
             form.reset();
             hasAutoSubmittedForCurrentFill = false;
           } finally {
