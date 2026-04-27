@@ -1373,10 +1373,6 @@
         .calendar-shell {
           animation: none;
         }
-
-        .media-slide {
-          transition: none;
-        }
       }
     </style>
   </head>
@@ -1693,7 +1689,6 @@
       (function () {
         const mediaCarousels = document.querySelectorAll("[data-media-carousel]");
         if (mediaCarousels.length) {
-          const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
           mediaCarousels.forEach(function (carousel) {
             const slides = Array.from(carousel.querySelectorAll(".media-slide"));
             const dots = Array.from(carousel.querySelectorAll(".media-dot"));
@@ -1726,7 +1721,7 @@
             };
 
             const startAutoplay = function () {
-              if (reduceMotion || slides.length < 2 || autoTimer) return;
+              if (slides.length < 2 || autoTimer) return;
               autoTimer = window.setInterval(function () {
                 setActiveSlide(activeIndex + 1);
               }, 4000);
