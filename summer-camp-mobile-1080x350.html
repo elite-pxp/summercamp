@@ -526,6 +526,23 @@
         text-align: center;
       }
 
+      @media (hover: hover) and (pointer: fine) {
+        .info .grid-3 > .card {
+          --card-tilt-x: 0deg;
+          --card-tilt-y: 0deg;
+          transform: perspective(900px) rotateX(var(--card-tilt-x)) rotateY(var(--card-tilt-y)) translateY(0);
+          transform-style: preserve-3d;
+          will-change: transform, box-shadow, filter;
+          transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+        }
+
+        .info .grid-3 > .card.is-hovered {
+          transform: perspective(900px) rotateX(var(--card-tilt-x)) rotateY(var(--card-tilt-y)) translateY(-12px);
+          box-shadow: 0 16px 30px rgba(35, 37, 18, 0.18);
+          filter: saturate(1.03);
+        }
+      }
+
       .life-shell {
         margin-top: 1rem;
         border: 2px solid #cfd8bb;
@@ -720,6 +737,105 @@
         color: #dce7bf;
         font-size: 1rem;
         font-weight: 900;
+      }
+
+      .media-carousel {
+        margin-top: 0.95rem;
+        padding: 0.45rem;
+        border-radius: 18px;
+        border: 1px solid rgba(214, 198, 110, 0.45);
+        background: rgba(12, 18, 5, 0.46);
+      }
+
+      .media-carousel-viewport {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+        background: #1b2907;
+      }
+
+      .media-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transform: scale(1.015);
+        transition: opacity 380ms ease, transform 380ms ease;
+        pointer-events: none;
+        background: #101806;
+      }
+
+      .media-slide.is-active {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: auto;
+      }
+
+      .media-slide img,
+      .media-slide video {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+        background: #101806;
+      }
+
+      .media-slide img {
+        cursor: zoom-in;
+      }
+
+      .media-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        width: 34px;
+        height: 34px;
+        border: 1px solid rgba(249, 194, 55, 0.72);
+        border-radius: 999px;
+        background: rgba(18, 28, 6, 0.68);
+        color: #f9c237;
+        font-size: 1rem;
+        font-weight: 900;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .media-arrow:hover {
+        background: rgba(18, 28, 6, 0.9);
+      }
+
+      .media-arrow-prev {
+        left: 0.45rem;
+      }
+
+      .media-arrow-next {
+        right: 0.45rem;
+      }
+
+      .media-carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.42rem;
+        margin-top: 0.5rem;
+      }
+
+      .media-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        border: 1px solid rgba(249, 194, 55, 0.75);
+        background: rgba(220, 231, 191, 0.34);
+        cursor: pointer;
+        transition: transform 180ms ease, background-color 180ms ease;
+      }
+
+      .media-dot.is-active {
+        transform: scale(1.14);
+        background: #f9c237;
       }
 
       .calendar-grid {
@@ -1176,6 +1292,15 @@
         .calendar-shell {
           animation: none;
         }
+
+        .info .grid-3 > .card {
+          transition: none !important;
+          transform: none !important;
+        }
+
+        .media-slide {
+          transition: none;
+        }
       }
 
       .mobile-action-row .btn {
@@ -1456,6 +1581,32 @@
           <p class="eyebrow">Camp Activities</p>
           <h3 class="calendar-title">Our Summer Fun Calendar</h3>
           <p class="calendar-copy">See the exciting weekly adventures your child can enjoy.</p>
+          <div class="media-carousel" data-media-carousel>
+            <div class="media-carousel-viewport">
+              <figure class="media-slide is-active">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777041398/global-image-library/Summer_3_ojhyus.png?v=1777041398" alt="Camp highlights at Elite Children Learning Center" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <video muted playsinline loop preload="metadata" poster="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg">
+                  <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
+                </video>
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg" alt="Hands-on summer camp activities" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042598/global-image-library/Cal2_ko1pac.jpg" alt="Weekly summer camp calendar highlights" loading="lazy" />
+              </figure>
+              <button type="button" class="media-arrow media-arrow-prev" aria-label="Previous slide">&lt;</button>
+              <button type="button" class="media-arrow media-arrow-next" aria-label="Next slide">&gt;</button>
+            </div>
+            <div class="media-carousel-dots" aria-label="Camp highlight slideshow navigation">
+              <button type="button" class="media-dot is-active" aria-label="Show slide 1"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 2"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 3"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 4"></button>
+            </div>
+          </div>
           <div class="calendar-grid">
             <figure class="calendar-card">
               <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg" alt="Summer camp activity calendar image 1" loading="lazy" />
@@ -1599,10 +1750,126 @@
     </div>
     <script>
       (function () {
+        const mediaCarousels = document.querySelectorAll("[data-media-carousel]");
+        if (mediaCarousels.length) {
+          const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          mediaCarousels.forEach(function (carousel) {
+            const slides = Array.from(carousel.querySelectorAll(".media-slide"));
+            const dots = Array.from(carousel.querySelectorAll(".media-dot"));
+            const prevBtn = carousel.querySelector(".media-arrow-prev");
+            const nextBtn = carousel.querySelector(".media-arrow-next");
+            if (!slides.length) return;
+
+            let activeIndex = 0;
+            let autoTimer = null;
+
+            const setActiveSlide = function (nextIndex) {
+              activeIndex = (nextIndex + slides.length) % slides.length;
+
+              slides.forEach(function (slide, index) {
+                const isActive = index === activeIndex;
+                const video = slide.querySelector("video");
+                slide.classList.toggle("is-active", isActive);
+                slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+                if (video) {
+                  if (isActive) {
+                    const playPromise = video.play();
+                    if (playPromise && typeof playPromise.catch === "function") {
+                      playPromise.catch(function () {});
+                    }
+                  } else {
+                    video.pause();
+                    video.currentTime = 0;
+                  }
+                }
+              });
+
+              dots.forEach(function (dot, index) {
+                dot.classList.toggle("is-active", index === activeIndex);
+              });
+            };
+
+            const stopAutoplay = function () {
+              if (autoTimer) {
+                window.clearInterval(autoTimer);
+                autoTimer = null;
+              }
+            };
+
+            const startAutoplay = function () {
+              if (reduceMotion || slides.length < 2 || autoTimer) return;
+              autoTimer = window.setInterval(function () {
+                setActiveSlide(activeIndex + 1);
+              }, 4000);
+            };
+
+            dots.forEach(function (dot, index) {
+              dot.addEventListener("click", function () {
+                setActiveSlide(index);
+                stopAutoplay();
+                startAutoplay();
+              });
+            });
+
+            if (prevBtn) {
+              prevBtn.addEventListener("click", function () {
+                setActiveSlide(activeIndex - 1);
+                stopAutoplay();
+                startAutoplay();
+              });
+            }
+
+            if (nextBtn) {
+              nextBtn.addEventListener("click", function () {
+                setActiveSlide(activeIndex + 1);
+                stopAutoplay();
+                startAutoplay();
+              });
+            }
+
+            carousel.addEventListener("pointerenter", stopAutoplay);
+            carousel.addEventListener("pointerleave", startAutoplay);
+            carousel.addEventListener("focusin", stopAutoplay);
+            carousel.addEventListener("focusout", startAutoplay);
+
+            setActiveSlide(0);
+            startAutoplay();
+          });
+        }
+
+        const floatingCards = document.querySelectorAll(".info .grid-3 > .card");
+        if (floatingCards.length && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+          floatingCards.forEach(function (card) {
+            const resetTilt = function () {
+              card.style.setProperty("--card-tilt-x", "0deg");
+              card.style.setProperty("--card-tilt-y", "0deg");
+            };
+
+            card.addEventListener("pointerenter", function () {
+              card.classList.add("is-hovered");
+            });
+
+            card.addEventListener("pointermove", function (event) {
+              const rect = card.getBoundingClientRect();
+              const offsetX = (event.clientX - rect.left) / rect.width - 0.5;
+              const offsetY = (event.clientY - rect.top) / rect.height - 0.5;
+              const rotateY = Math.max(-5, Math.min(5, offsetX * 8));
+              const rotateX = Math.max(-5, Math.min(5, -offsetY * 8));
+              card.style.setProperty("--card-tilt-x", rotateX.toFixed(2) + "deg");
+              card.style.setProperty("--card-tilt-y", rotateY.toFixed(2) + "deg");
+            });
+
+            card.addEventListener("pointerleave", function () {
+              card.classList.remove("is-hovered");
+              resetTilt();
+            });
+          });
+        }
+
         const lightbox = document.getElementById("image-lightbox");
         const lightboxImg = document.getElementById("image-lightbox-img");
         const closeBtn = document.getElementById("image-lightbox-close");
-        const clickableImages = document.querySelectorAll(".calendar-card img, .weekly-strip img");
+        const clickableImages = document.querySelectorAll(".calendar-card img, .weekly-strip img, .media-slide img");
         const referralCards = document.querySelectorAll(".referral-card[data-preview-src]");
         if (!lightbox || !lightboxImg || !closeBtn || (!clickableImages.length && !referralCards.length)) return;
 
