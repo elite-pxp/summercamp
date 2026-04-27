@@ -2033,7 +2033,11 @@
 
         const validateAll = function () {
           forms.forEach(function (pair) {
+            if (!pair.button.dataset.defaultLabel) {
+              pair.button.dataset.defaultLabel = (pair.button.textContent || "").trim() || "Get the Free Book";
+            }
             pair.button.disabled = isSubmitting;
+            pair.button.textContent = isSubmitting ? "Submitting..." : pair.button.dataset.defaultLabel;
           });
         };
 
