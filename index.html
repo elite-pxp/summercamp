@@ -1076,6 +1076,54 @@
         animation: none;
       }
 
+      .ebook-popup {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        z-index: 10001;
+      }
+
+      .ebook-popup.is-open {
+        display: flex;
+      }
+
+      .ebook-popup-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(12, 20, 4, 0.62);
+      }
+
+      .ebook-popup-panel {
+        position: relative;
+        width: min(520px, 95vw);
+        z-index: 1;
+      }
+
+      .download-card-popup {
+        margin: 0;
+        border: 2px solid #d6bb49;
+      }
+
+      .ebook-popup-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 999px;
+        font-size: 1.2rem;
+        line-height: 1;
+        cursor: pointer;
+        background: #f7f3e8;
+        color: #243504;
+        font-weight: 900;
+        z-index: 2;
+      }
+
       .final-cta {
         position: relative;
         overflow: hidden;
@@ -1514,6 +1562,27 @@
       <img id="image-lightbox-img" src="" alt="Expanded calendar preview" />
     </div>
 
+    <div class="ebook-popup" id="ebook-popup" aria-hidden="true">
+      <div class="ebook-popup-backdrop" data-ebook-popup-close></div>
+      <div class="ebook-popup-panel" role="dialog" aria-modal="true" aria-labelledby="ebook-popup-title">
+        <button class="ebook-popup-close" type="button" aria-label="Close free book popup" data-ebook-popup-close>x</button>
+        <article class="download-card download-card-popup">
+          <p class="eyebrow">Free Download</p>
+          <h3 class="panel-title" id="ebook-popup-title">Kids Wealth Book</h3>
+          <p class="panel-copy">
+            Claim your free copy now. Fill out this quick form and get instant access to the booklet.
+          </p>
+          <form class="download-form" id="kids-book-form-popup">
+            <input type="text" name="parent_name" placeholder="Parent name" required />
+            <input type="email" name="email" placeholder="Email address" required />
+            <input type="tel" name="contact_number" placeholder="Contact number" required />
+            <input type="text" name="child_age" placeholder="Child age" required />
+            <button type="submit" id="kids-book-download-btn-popup" class="button-animated" disabled>Get the Free Book</button>
+          </form>
+        </article>
+      </div>
+    </div>
+
     <section class="cta-wrap">
       <div class="container">
         <div class="cta-grid">
@@ -1795,11 +1864,18 @@
         const LEAD_STORAGE_BACKUP_KEY = "eclc_kids_book_leads_backup_v1";
         const AUTO_DOWNLOAD_LEAD_CSV = false;
         const AUTO_SUBMIT_ON_COMPLETE = false;
-        const form = document.getElementById("kids-book-form");
-        const button = document.getElementById("kids-book-download-btn");
-        if (!form || !button) return;
+        const forms = [
+          { form: document.getElementById("kids-book-form"), button: document.getElementById("kids-book-download-btn") },
+          { form: document.getElementById("kids-book-form-popup"), button: document.getElementById("kids-book-download-btn-popup") },
+        ].filter(function (pair) {
+          return pair.form && pair.button;
+        });
+        if (!forms.length) return;
+        const popup = document.getElementById("ebook-popup");
+        const popupCloseTargets = popup ? popup.querySelectorAll("[data-ebook-popup-close]") : [];
+        const POPUP_DELAY_MS = 10000;
+        const POPUP_SEEN_SESSION_KEY = "eclc_ebook_popup_seen_v1";
         let isSubmitting = false;
-        let hasAutoSubmittedForCurrentFill = false;
         let hasTriggeredDownloadForCurrentSubmit = false;
 
         const csvEscape = function (value) {
@@ -1905,98 +1981,137 @@
           downloadCsv(leadsToCsv(stored));
         };
 
-        const inputs = Array.from(form.querySelectorAll("input[required]"));
-        const allRequiredFilled = function () {
+        const hasSeenPopup = function () {
+          try {
+            return sessionStorage.getItem(POPUP_SEEN_SESSION_KEY) === "1";
+          } catch (error) {
+            return false;
+          }
+        };
+
+        const markPopupSeen = function () {
+          try {
+            sessionStorage.setItem(POPUP_SEEN_SESSION_KEY, "1");
+          } catch (error) {
+            // Ignore storage failures in private browsers.
+          }
+        };
+
+        const openPopup = function () {
+          if (!popup || hasSeenPopup()) return;
+          popup.classList.add("is-open");
+          popup.setAttribute("aria-hidden", "false");
+        };
+
+        const closePopup = function () {
+          if (!popup) return;
+          popup.classList.remove("is-open");
+          popup.setAttribute("aria-hidden", "true");
+          markPopupSeen();
+        };
+
+        if (popup && !hasSeenPopup()) {
+          window.setTimeout(openPopup, POPUP_DELAY_MS);
+          popupCloseTargets.forEach(function (target) {
+            target.addEventListener("click", closePopup);
+          });
+          document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape" && popup.classList.contains("is-open")) {
+              closePopup();
+            }
+          });
+        }
+
+        const allRequiredFilled = function (pair) {
+          const inputs = Array.from(pair.form.querySelectorAll("input[required]"));
           return inputs.every(function (input) {
             return input.value.trim().length > 0;
           });
         };
 
-        const validate = function () {
-          const ready = allRequiredFilled();
-          button.disabled = isSubmitting;
-          if (!ready) hasAutoSubmittedForCurrentFill = false;
-          return ready;
+        const validateAll = function () {
+          forms.forEach(function (pair) {
+            pair.button.disabled = isSubmitting;
+          });
         };
 
-        const triggerAutoSubmitIfReady = function () {
-          if (!AUTO_SUBMIT_ON_COMPLETE || isSubmitting || hasAutoSubmittedForCurrentFill) return;
-          if (!validate()) return;
-          hasAutoSubmittedForCurrentFill = true;
-          if (typeof form.requestSubmit === "function") {
-            form.requestSubmit(button);
-            return;
-          }
-          button.click();
-        };
-
-        inputs.forEach(function (input) {
-          input.addEventListener("input", function () {
-            validate();
-            triggerAutoSubmitIfReady();
-          });
-          input.addEventListener("change", function () {
-            validate();
-            triggerAutoSubmitIfReady();
-          });
-        });
-
-        form.addEventListener("submit", async function (event) {
-          event.preventDefault();
-          if (isSubmitting) return;
-          isSubmitting = true;
-          validate();
-          if (!form.checkValidity() || !allRequiredFilled()) {
-            form.reportValidity();
-            isSubmitting = false;
-            validate();
-            return;
-          }
-
-          try {
-            hasTriggeredDownloadForCurrentSubmit = false;
-            const lead = {
-              submitted_at: new Date().toISOString(),
-              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
-              utc_offset_minutes: new Date().getTimezoneOffset(),
-              source_page: window.location.href,
-              page_title: document.title || "",
-              parent_name: (form.querySelector("input[name='parent_name']") || {}).value || "",
-              email: (form.querySelector("input[name='email']") || {}).value || "",
-              contact_number: (form.querySelector("input[name='contact_number']") || {}).value || "",
-              child_age: (form.querySelector("input[name='child_age']") || {}).value || "",
-              utm_source: getQueryParam("utm_source"),
-              utm_medium: getQueryParam("utm_medium"),
-              utm_campaign: getQueryParam("utm_campaign"),
-              user_agent: navigator.userAgent || "",
-            };
-
-            const leads = saveLeadLocally(lead);
-            if (AUTO_DOWNLOAD_LEAD_CSV) {
-              downloadCsv(leadsToCsv(leads));
+        forms.forEach(function (pair) {
+          const inputs = Array.from(pair.form.querySelectorAll("input[required]"));
+          const triggerAutoSubmitIfReady = function () {
+            if (!AUTO_SUBMIT_ON_COMPLETE || isSubmitting) return;
+            if (!allRequiredFilled(pair)) return;
+            if (typeof pair.form.requestSubmit === "function") {
+              pair.form.requestSubmit(pair.button);
+              return;
             }
+            pair.button.click();
+          };
 
-            if (!BOOK_DOWNLOAD_URL.startsWith("http")) {
-              hasAutoSubmittedForCurrentFill = false;
+          inputs.forEach(function (input) {
+            input.addEventListener("input", function () {
+              validateAll();
+              triggerAutoSubmitIfReady();
+            });
+            input.addEventListener("change", function () {
+              validateAll();
+              triggerAutoSubmitIfReady();
+            });
+          });
+
+          pair.form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            if (isSubmitting) return;
+            isSubmitting = true;
+            validateAll();
+            if (!pair.form.checkValidity() || !allRequiredFilled(pair)) {
+              pair.form.reportValidity();
+              isSubmitting = false;
+              validateAll();
               return;
             }
 
-            if (!hasTriggeredDownloadForCurrentSubmit) {
-              hasTriggeredDownloadForCurrentSubmit = true;
-              triggerBookDownload();
+            try {
+              hasTriggeredDownloadForCurrentSubmit = false;
+              const lead = {
+                submitted_at: new Date().toISOString(),
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
+                utc_offset_minutes: new Date().getTimezoneOffset(),
+                source_page: window.location.href,
+                page_title: document.title || "",
+                parent_name: (pair.form.querySelector("input[name='parent_name']") || {}).value || "",
+                email: (pair.form.querySelector("input[name='email']") || {}).value || "",
+                contact_number: (pair.form.querySelector("input[name='contact_number']") || {}).value || "",
+                child_age: (pair.form.querySelector("input[name='child_age']") || {}).value || "",
+                utm_source: getQueryParam("utm_source"),
+                utm_medium: getQueryParam("utm_medium"),
+                utm_campaign: getQueryParam("utm_campaign"),
+                user_agent: navigator.userAgent || "",
+              };
+
+              const leads = saveLeadLocally(lead);
+              if (AUTO_DOWNLOAD_LEAD_CSV) {
+                downloadCsv(leadsToCsv(leads));
+              }
+
+              if (!BOOK_DOWNLOAD_URL.startsWith("http")) return;
+
+              if (!hasTriggeredDownloadForCurrentSubmit) {
+                hasTriggeredDownloadForCurrentSubmit = true;
+                triggerBookDownload();
+              }
+              sendLeadToEndpoint(lead);
+              pair.form.reset();
+              closePopup();
+            } finally {
+              isSubmitting = false;
+              hasTriggeredDownloadForCurrentSubmit = false;
+              validateAll();
             }
-            sendLeadToEndpoint(lead);
-            form.reset();
-            hasAutoSubmittedForCurrentFill = false;
-          } finally {
-            isSubmitting = false;
-            hasTriggeredDownloadForCurrentSubmit = false;
-            validate();
-          }
+          });
         });
 
-        validate();
-        window.setTimeout(validate, 0);
+        validateAll();
+        window.setTimeout(validateAll, 0);
       })();
     </script>
   </body>
