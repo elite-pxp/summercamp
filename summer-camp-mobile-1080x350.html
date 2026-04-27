@@ -2183,7 +2183,7 @@
 
         const validate = function () {
           const ready = allRequiredFilled();
-          button.disabled = !ready || isSubmitting;
+          button.disabled = isSubmitting;
           if (!ready) hasAutoSubmittedForCurrentFill = false;
           return ready;
         };
@@ -2215,8 +2215,10 @@
           if (isSubmitting) return;
           isSubmitting = true;
           validate();
-          if (button.disabled) {
+          if (!form.checkValidity() || !allRequiredFilled()) {
+            form.reportValidity();
             isSubmitting = false;
+            validate();
             return;
           }
 
@@ -2256,6 +2258,7 @@
         });
 
         validate();
+        window.setTimeout(validate, 0);
       })();
     </script>
   </body>
