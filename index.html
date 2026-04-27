@@ -1875,8 +1875,10 @@
         const popupCloseTargets = popup ? popup.querySelectorAll("[data-ebook-popup-close]") : [];
         const POPUP_DELAY_MS = 10000;
         const POPUP_SEEN_SESSION_KEY = "eclc_ebook_popup_seen_v1";
+        const DOWNLOAD_GUARD_MS = 8000;
         let isSubmitting = false;
         let hasTriggeredDownloadForCurrentSubmit = false;
+        let lastDownloadAt = 0;
 
         const csvEscape = function (value) {
           const normalized = String(value == null ? "" : value).replace(/"/g, "\"\"");
@@ -1942,18 +1944,9 @@
         };
 
         const triggerBookDownload = function () {
-          let openedWindow = null;
-          try {
-            openedWindow = window.open(BOOK_DOWNLOAD_URL, "_blank", "noopener,noreferrer");
-          } catch (error) {
-            openedWindow = null;
-          }
-
-          if (openedWindow && typeof openedWindow.focus === "function") {
-            openedWindow.focus();
-            return;
-          }
-
+          const now = Date.now();
+          if (now - lastDownloadAt < DOWNLOAD_GUARD_MS) return;
+          lastDownloadAt = now;
           window.location.href = BOOK_DOWNLOAD_URL;
         };
 
