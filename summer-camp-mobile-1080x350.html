@@ -2066,9 +2066,12 @@
         const LEAD_STORAGE_KEY = "eclc_kids_book_leads_v1";
         const LEAD_STORAGE_BACKUP_KEY = "eclc_kids_book_leads_backup_v1";
         const AUTO_DOWNLOAD_LEAD_CSV = window.ECLC_AUTO_DOWNLOAD_LEAD_CSV !== false;
+        const AUTO_SUBMIT_ON_COMPLETE = window.ECLC_AUTO_SUBMIT_ON_COMPLETE !== false;
         const form = document.getElementById("kids-book-form");
         const button = document.getElementById("kids-book-download-btn");
         if (!form || !button) return;
+        let isSubmitting = false;
+        let hasAutoSubmittedForCurrentFill = false;
 
         const csvEscape = function (value) {
           const normalized = String(value == null ? "" : value).replace(/"/g, "\"\"");
@@ -2156,53 +2159,91 @@
         };
 
         const inputs = Array.from(form.querySelectorAll("input[required]"));
-        const validate = function () {
-          button.disabled = !inputs.every(function (input) {
+        const allRequiredFilled = function () {
+          return inputs.every(function (input) {
             return input.value.trim().length > 0;
           });
         };
 
+        const validate = function () {
+          const ready = allRequiredFilled();
+          button.disabled = !ready || isSubmitting;
+          if (!ready) hasAutoSubmittedForCurrentFill = false;
+          return ready;
+        };
+
+        const triggerAutoSubmitIfReady = function () {
+          if (!AUTO_SUBMIT_ON_COMPLETE || isSubmitting || hasAutoSubmittedForCurrentFill) return;
+          if (!validate()) return;
+          hasAutoSubmittedForCurrentFill = true;
+          if (typeof form.requestSubmit === "function") {
+            form.requestSubmit(button);
+            return;
+          }
+          button.click();
+        };
+
         inputs.forEach(function (input) {
-          input.addEventListener("input", validate);
+          input.addEventListener("input", function () {
+            validate();
+            triggerAutoSubmitIfReady();
+          });
+          input.addEventListener("change", function () {
+            validate();
+            triggerAutoSubmitIfReady();
+          });
         });
 
         form.addEventListener("submit", async function (event) {
           event.preventDefault();
+          if (isSubmitting) return;
+          isSubmitting = true;
           validate();
-          if (button.disabled) return;
-
-          const lead = {
-            submitted_at: new Date().toISOString(),
-            source_page: window.location.href,
-            page_title: document.title || "",
-            parent_name: (form.querySelector("input[name='parent_name']") || {}).value || "",
-            email: (form.querySelector("input[name='email']") || {}).value || "",
-            contact_number: (form.querySelector("input[name='contact_number']") || {}).value || "",
-            child_age: (form.querySelector("input[name='child_age']") || {}).value || "",
-            utm_source: getQueryParam("utm_source"),
-            utm_medium: getQueryParam("utm_medium"),
-            utm_campaign: getQueryParam("utm_campaign"),
-            user_agent: navigator.userAgent || "",
-          };
-
-          const leads = saveLeadLocally(lead);
-          if (AUTO_DOWNLOAD_LEAD_CSV) {
-            downloadCsv(leadsToCsv(leads));
+          if (button.disabled) {
+            isSubmitting = false;
+            return;
           }
 
-          await sendLeadToEndpoint(lead);
-          if (!BOOK_DOWNLOAD_URL.startsWith("http")) return;
+          try {
+            const lead = {
+              submitted_at: new Date().toISOString(),
+              source_page: window.location.href,
+              page_title: document.title || "",
+              parent_name: (form.querySelector("input[name='parent_name']") || {}).value || "",
+              email: (form.querySelector("input[name='email']") || {}).value || "",
+              contact_number: (form.querySelector("input[name='contact_number']") || {}).value || "",
+              child_age: (form.querySelector("input[name='child_age']") || {}).value || "",
+              utm_source: getQueryParam("utm_source"),
+              utm_medium: getQueryParam("utm_medium"),
+              utm_campaign: getQueryParam("utm_campaign"),
+              user_agent: navigator.userAgent || "",
+            };
 
-          const link = document.createElement("a");
-          link.href = BOOK_DOWNLOAD_URL;
-          link.download = "kids-wealth-book";
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          form.reset();
-          validate();
+            const leads = saveLeadLocally(lead);
+            if (AUTO_DOWNLOAD_LEAD_CSV) {
+              downloadCsv(leadsToCsv(leads));
+            }
+
+            await sendLeadToEndpoint(lead);
+            if (!BOOK_DOWNLOAD_URL.startsWith("http")) {
+              hasAutoSubmittedForCurrentFill = false;
+              return;
+            }
+
+            const link = document.createElement("a");
+            link.href = BOOK_DOWNLOAD_URL;
+            link.download = "kids-wealth-book";
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            form.reset();
+            hasAutoSubmittedForCurrentFill = false;
+          } finally {
+            isSubmitting = false;
+            validate();
+          }
         });
 
         validate();
