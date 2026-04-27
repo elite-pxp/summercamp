@@ -1952,12 +1952,12 @@
               downloadCsv(leadsToCsv(leads));
             }
 
-            await sendLeadToEndpoint(lead);
             if (!BOOK_DOWNLOAD_URL.startsWith("http")) {
               hasAutoSubmittedForCurrentFill = false;
               return;
             }
 
+            sendLeadToEndpoint(lead);
             const link = document.createElement("a");
             link.href = BOOK_DOWNLOAD_URL;
             link.download = "kids-wealth-book";
