@@ -729,15 +729,21 @@
         position: absolute;
         inset: 0;
         opacity: 0;
-        transform: scale(1.015);
-        transition: opacity 380ms ease, transform 380ms ease;
+        transform: translateX(22px) scale(1.01);
+        filter: saturate(0.94);
+        transition:
+          opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+          transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+          filter 900ms cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: opacity, transform, filter;
         pointer-events: none;
         background: #101806;
       }
 
       .media-slide.is-active {
         opacity: 1;
-        transform: scale(1);
+        transform: translateX(0) scale(1);
+        filter: saturate(1);
         pointer-events: auto;
       }
 
@@ -1313,6 +1319,13 @@
 
         .calendar-grid {
           grid-template-columns: 1fr;
+        }
+
+        .media-slide {
+          transition:
+            opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+            filter 900ms cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .schedule-embed {
