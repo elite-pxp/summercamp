@@ -784,6 +784,68 @@
         cursor: zoom-in;
       }
 
+      .media-slide-instagram {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.35rem;
+        overflow: hidden;
+      }
+
+      .instagram-ambient {
+        position: absolute;
+        inset: -8%;
+        z-index: 0;
+        pointer-events: none;
+        filter: blur(24px) saturate(1.22) brightness(0.72);
+        transform: scale(1.08);
+        opacity: 0.85;
+      }
+
+      .instagram-ambient iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+        pointer-events: none;
+      }
+
+      .media-slide-instagram::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, rgba(8, 14, 4, 0.52) 66%);
+      }
+
+      .instagram-shell {
+        width: min(100%, 360px);
+        aspect-ratio: 9 / 16;
+        border-radius: 12px;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.78);
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+      }
+
+      .instagram-shell .instagram-media {
+        margin: 0 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        height: 100% !important;
+      }
+
+      .instagram-shell iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+      }
+
       .media-arrow {
         position: absolute;
         top: 50%;
@@ -1579,23 +1641,45 @@
       <div class="container">
         <div class="calendar-shell">
           <p class="eyebrow">Camp Activities</p>
-          <h3 class="calendar-title">Our Summer Fun Calendar</h3>
-          <p class="calendar-copy">See the exciting weekly adventures your child can enjoy.</p>
+          <h3 class="calendar-title">Camp Highlights</h3>
+          <p class="calendar-copy">Watch our latest camp reels and activity moments.</p>
           <div class="media-carousel" data-media-carousel>
             <div class="media-carousel-viewport">
-              <figure class="media-slide is-active">
-                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777041398/global-image-library/Summer_3_ojhyus.png?v=1777041398" alt="Camp highlights at Elite Children Learning Center" loading="lazy" />
+              <figure class="media-slide media-slide-instagram is-active">
+                <div class="instagram-shell">
+                  <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/C8cHKCQhSDt/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
+                    <a href="https://www.instagram.com/reel/C8cHKCQhSDt/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener noreferrer">View this post on Instagram</a>
+                  </blockquote>
+                </div>
               </figure>
-              <figure class="media-slide">
-                <video muted playsinline loop preload="metadata" poster="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg">
-                  <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
-                </video>
+              <figure class="media-slide media-slide-instagram">
+                <div class="instagram-shell">
+                  <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/C8rhhdmBpun/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
+                    <a href="https://www.instagram.com/reel/C8rhhdmBpun/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener noreferrer">View this post on Instagram</a>
+                  </blockquote>
+                </div>
+              </figure>
+              <figure class="media-slide media-slide-instagram">
+                <div class="instagram-shell">
+                  <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/C9DODiJJMYc/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
+                    <a href="https://www.instagram.com/reel/C9DODiJJMYc/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener noreferrer">View this post on Instagram</a>
+                  </blockquote>
+                </div>
               </figure>
               <figure class="media-slide">
                 <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg" alt="Hands-on summer camp activities" loading="lazy" />
               </figure>
               <figure class="media-slide">
                 <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042598/global-image-library/Cal2_ko1pac.jpg" alt="Weekly summer camp calendar highlights" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777300279/global-image-library/WhatsApp_Image_2026-04-27_at_22.30.35_hipxvi.jpg" alt="Camp highlight photo from April 27, 2026" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777300312/global-image-library/Referal_Programpng_fhft16.png" alt="Referral program flyer" loading="lazy" />
+              </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777300348/global-image-library/WhatsApp_Image_2026-04-27_at_22.31.05_xv6ovo.jpg" alt="Camp activity photo from April 27, 2026" loading="lazy" />
               </figure>
               <button type="button" class="media-arrow media-arrow-prev" aria-label="Previous slide">&lt;</button>
               <button type="button" class="media-arrow media-arrow-next" aria-label="Next slide">&gt;</button>
@@ -1605,15 +1689,11 @@
               <button type="button" class="media-dot" aria-label="Show slide 2"></button>
               <button type="button" class="media-dot" aria-label="Show slide 3"></button>
               <button type="button" class="media-dot" aria-label="Show slide 4"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 5"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 6"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 7"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 8"></button>
             </div>
-          </div>
-          <div class="calendar-grid">
-            <figure class="calendar-card">
-              <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042595/global-image-library/Cal1_xqlyc0.jpg" alt="Summer camp activity calendar image 1" loading="lazy" />
-            </figure>
-            <figure class="calendar-card">
-              <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777042598/global-image-library/Cal2_ko1pac.jpg" alt="Summer camp activity calendar image 2" loading="lazy" />
-            </figure>
           </div>
         </div>
       </div>
@@ -1748,8 +1828,46 @@
       </div>
     </footer>
     </div>
+    <script async src="https://www.instagram.com/embed.js"></script>
     <script>
       (function () {
+        const instagramShells = document.querySelectorAll(".instagram-shell");
+        instagramShells.forEach(function (shell) {
+          if (shell.querySelector("iframe")) return;
+          const blockquote = shell.querySelector(".instagram-media");
+          if (!blockquote) return;
+
+          const fallbackLink = blockquote.querySelector("a");
+          const permalink = blockquote.getAttribute("data-instgrm-permalink") || (fallbackLink ? fallbackLink.href : "");
+          const reelMatch = permalink.match(/instagram\.com\/reel\/([^/?#]+)/i);
+          if (!reelMatch) return;
+
+          const reelId = reelMatch[1];
+          const reelSrc = "https://www.instagram.com/reel/" + reelId + "/embed/?autoplay=1&muted=1";
+          const makeFrame = function (isAmbient) {
+            const frame = document.createElement("iframe");
+            frame.src = reelSrc;
+            frame.title = "Instagram reel " + reelId + (isAmbient ? " ambient" : "");
+            frame.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture; fullscreen");
+            frame.setAttribute("allowfullscreen", "");
+            frame.setAttribute("loading", "lazy");
+            if (isAmbient) frame.setAttribute("tabindex", "-1");
+            return frame;
+          };
+
+          shell.innerHTML = "";
+          shell.appendChild(makeFrame(false));
+
+          const slide = shell.closest(".media-slide-instagram");
+          if (slide && !slide.querySelector(".instagram-ambient")) {
+            const ambient = document.createElement("div");
+            ambient.className = "instagram-ambient";
+            ambient.setAttribute("aria-hidden", "true");
+            ambient.appendChild(makeFrame(true));
+            slide.insertBefore(ambient, shell);
+          }
+        });
+
         const mediaCarousels = document.querySelectorAll("[data-media-carousel]");
         if (mediaCarousels.length) {
           const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1769,6 +1887,7 @@
               slides.forEach(function (slide, index) {
                 const isActive = index === activeIndex;
                 const video = slide.querySelector("video");
+                const instagramFrame = slide.querySelector(".instagram-shell iframe");
                 slide.classList.toggle("is-active", isActive);
                 slide.setAttribute("aria-hidden", isActive ? "false" : "true");
                 if (video) {
@@ -1781,6 +1900,11 @@
                     video.pause();
                     video.currentTime = 0;
                   }
+                }
+
+                if (instagramFrame && isActive) {
+                  const currentSrc = instagramFrame.getAttribute("src") || "";
+                  if (currentSrc) instagramFrame.src = currentSrc;
                 }
               });
 
@@ -1829,8 +1953,6 @@
 
             carousel.addEventListener("pointerenter", stopAutoplay);
             carousel.addEventListener("pointerleave", startAutoplay);
-            carousel.addEventListener("focusin", stopAutoplay);
-            carousel.addEventListener("focusout", startAutoplay);
 
             setActiveSlide(0);
             startAutoplay();
