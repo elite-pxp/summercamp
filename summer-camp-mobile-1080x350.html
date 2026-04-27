@@ -2065,13 +2065,14 @@
         const LEAD_LOG_ENDPOINT = window.ECLC_LEAD_LOG_ENDPOINT || "https://hook.us2.make.com/odcf6h319vlkk5936el2g0tdtb4pt6ry";
         const LEAD_STORAGE_KEY = "eclc_kids_book_leads_v1";
         const LEAD_STORAGE_BACKUP_KEY = "eclc_kids_book_leads_backup_v1";
-        const AUTO_DOWNLOAD_LEAD_CSV = window.ECLC_AUTO_DOWNLOAD_LEAD_CSV === true;
-        const AUTO_SUBMIT_ON_COMPLETE = window.ECLC_AUTO_SUBMIT_ON_COMPLETE === true;
+        const AUTO_DOWNLOAD_LEAD_CSV = false;
+        const AUTO_SUBMIT_ON_COMPLETE = false;
         const form = document.getElementById("kids-book-form");
         const button = document.getElementById("kids-book-download-btn");
         if (!form || !button) return;
         let isSubmitting = false;
         let hasAutoSubmittedForCurrentFill = false;
+        let hasTriggeredDownloadForCurrentSubmit = false;
 
         const csvEscape = function (value) {
           const normalized = String(value == null ? "" : value).replace(/"/g, "\"\"");
@@ -2225,6 +2226,7 @@
           }
 
           try {
+            hasTriggeredDownloadForCurrentSubmit = false;
             const lead = {
               submitted_at: new Date().toISOString(),
               timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "",
@@ -2251,12 +2253,16 @@
               return;
             }
 
-            triggerBookDownload();
+            if (!hasTriggeredDownloadForCurrentSubmit) {
+              hasTriggeredDownloadForCurrentSubmit = true;
+              triggerBookDownload();
+            }
             sendLeadToEndpoint(lead);
             form.reset();
             hasAutoSubmittedForCurrentFill = false;
           } finally {
             isSubmitting = false;
+            hasTriggeredDownloadForCurrentSubmit = false;
             validate();
           }
         });
