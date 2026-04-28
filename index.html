@@ -135,6 +135,22 @@
         letter-spacing: 0.04em;
       }
 
+      .top-menu-shop {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.52rem 0.9rem;
+        border-radius: 10px;
+        text-decoration: none;
+        background: #f0c83b;
+        color: #243504;
+        font-size: 0.9rem;
+        font-weight: 900;
+        line-height: 1;
+        border: 2px solid #d6b33f;
+      }
+
       .hero-inner {
         position: relative;
         z-index: 2;
@@ -695,18 +711,30 @@
       }
 
       .calendar-title {
-        margin: 0.4rem 0 0.5rem;
-        font-size: 2.4rem;
+        margin: 0.25rem 0 0.2rem;
+        font-size: 3.12rem;
+        line-height: 1.02;
         color: #f9c237;
-        -webkit-text-stroke: 0.6px #000000;
-        text-shadow: 0 0 1px #000000;
+        -webkit-text-stroke: 1.2px #000;
+        text-shadow:
+          -1px -1px 0 #000,
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+          1px 1px 0 #000;
       }
 
       .calendar-copy {
         margin: 0;
         color: #dce7bf;
-        font-size: 1rem;
+        font-size: 1.95rem;
+        line-height: 1.05;
         font-weight: 900;
+        -webkit-text-stroke: 0.8px #000;
+        text-shadow:
+          -1px -1px 0 #000,
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+          1px 1px 0 #000;
       }
 
       .media-carousel {
@@ -1130,6 +1158,7 @@
         z-index: 2;
       }
 
+
       .final-cta {
         position: relative;
         overflow: hidden;
@@ -1239,6 +1268,28 @@
       }
 
       @media (max-width: 760px) {
+        .top-menu-inner {
+          flex-wrap: nowrap;
+          gap: 0.45rem;
+        }
+
+        .top-menu-text {
+          font-size: 0.68rem;
+          letter-spacing: 0.02em;
+          flex: 1 1 auto;
+          min-width: 0;
+        }
+
+        .top-menu-shop {
+          margin-left: auto;
+          width: auto;
+          min-height: 32px;
+          padding: 0.4rem 0.62rem;
+          font-size: 0.72rem;
+          border-width: 1px;
+          flex: 0 0 auto;
+        }
+
         .site-canvas {
           width: 768px;
           min-height: 249px;
@@ -1386,6 +1437,7 @@
           style="width: 40px; height: 40px; object-fit: contain;"
         />
         <div class="top-menu-text">Elite Children Learning Center</div>
+        <a class="top-menu-shop button-animated" href="https://go.eliteschildren.org/merch?variant=69aefe664648534892fdccb9" target="_blank" rel="noopener noreferrer">Shop</a>
       </div>
     </header>
 
@@ -1504,6 +1556,9 @@
               <figure class="media-slide">
                 <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777321121/global-image-library/WhatsApp_Image_2026-04-28_at_00.28.34_ofqrlz.jpg" alt="Camp highlight photo 14" loading="lazy" />
               </figure>
+              <figure class="media-slide">
+                <img src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777390290/global-image-library/WhatsApp_Image_2026-04-28_at_22.59.04_qqlrmw.jpg" alt="Camp highlight photo 15" loading="lazy" />
+              </figure>
               <button type="button" class="media-arrow media-arrow-prev" aria-label="Previous slide">&lt;</button>
               <button type="button" class="media-arrow media-arrow-next" aria-label="Next slide">&gt;</button>
             </div>
@@ -1522,6 +1577,7 @@
               <button type="button" class="media-dot" aria-label="Show slide 12"></button>
               <button type="button" class="media-dot" aria-label="Show slide 13"></button>
               <button type="button" class="media-dot" aria-label="Show slide 14"></button>
+              <button type="button" class="media-dot" aria-label="Show slide 15"></button>
             </div>
           </div>
           <div class="calendar-grid">
@@ -1611,6 +1667,7 @@
         </article>
       </div>
     </div>
+
 
     <section class="cta-wrap">
       <div class="container">
