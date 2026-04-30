@@ -1985,17 +1985,10 @@
           if (!LEAD_LOG_ENDPOINT.startsWith("http")) return;
           const payload = JSON.stringify(lead);
           try {
-            if (navigator.sendBeacon) {
-              const blob = new Blob([payload], { type: "application/json" });
-              if (navigator.sendBeacon(LEAD_LOG_ENDPOINT, blob)) return;
-            }
-          } catch (error) {
-            // Fallback to fetch below.
-          }
-          try {
             await fetch(LEAD_LOG_ENDPOINT, {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              mode: "no-cors",
+              headers: { "Content-Type": "text/plain;charset=UTF-8" },
               body: payload,
               keepalive: true,
             });
