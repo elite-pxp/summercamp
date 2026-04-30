@@ -2336,7 +2336,7 @@
             if (isSubmitting) return;
             isSubmitting = true;
             validateAll();
-            if (!pair.form.checkValidity() || !allRequiredFilled(pair)) {
+            if (!allRequiredFilled(pair)) {
               pair.form.reportValidity();
               isSubmitting = false;
               validateAll();
