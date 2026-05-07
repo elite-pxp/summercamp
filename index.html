@@ -1541,7 +1541,7 @@
             </div>
             <div class="card-sub age-group-sub">for kindergarten and school aged kids</div>
           </article>
-          <article class="card referral-card" data-preview-src="https://res.cloudinary.com/dozcy2jve/image/upload/v1778175057/images/Summer_Camp_2026_cq2xlv.png" data-preview-alt="Referral program details poster">
+          <article class="card referral-card" data-preview-src="https://res.cloudinary.com/dozcy2jve/image/upload/v1777043293/global-image-library/Referal_Programpng_oaaod2.png" data-preview-src-2="https://res.cloudinary.com/dozcy2jve/image/upload/v1778175057/images/Summer_Camp_2026_cq2xlv.png" data-preview-alt="Referral program details poster">
             <div class="card-head">
               <div class="card-head-left">
                 <img class="card-icon" src="https://res.cloudinary.com/dozcy2jve/image/upload/v1776968200/global-image-library/9_j8ifg2.png" alt="Referral icon" />
@@ -1914,28 +1914,80 @@
         const referralCards = document.querySelectorAll(".referral-card[data-preview-src]");
         if (!lightbox || !lightboxImg || !closeBtn || (!clickableImages.length && !referralCards.length)) return;
 
+        let currentGallery = [];
+        let currentGalleryIndex = 0;
+        const lightboxNav = document.createElement("div");
+        const lightboxPrev = document.createElement("button");
+        const lightboxNext = document.createElement("button");
+        lightboxNav.style.cssText = "position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:10px;z-index:3;";
+        lightboxPrev.type = "button";
+        lightboxPrev.textContent = "Back";
+        lightboxPrev.style.cssText = "border:0;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;background:#243504;color:#fff;";
+        lightboxNext.type = "button";
+        lightboxNext.textContent = "Next";
+        lightboxNext.style.cssText = "border:0;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;background:#6b8310;color:#fff;";
+        lightboxNav.appendChild(lightboxPrev);
+        lightboxNav.appendChild(lightboxNext);
+        lightbox.appendChild(lightboxNav);
+
+        const setGalleryImage = function () {
+          if (!currentGallery.length) return;
+          lightboxImg.src = currentGallery[currentGalleryIndex];
+          lightboxImg.alt = currentGallery.length > 1 ? "Referral program details poster " + (currentGalleryIndex + 1) : (lightboxImg.alt || "Expanded preview");
+          const showNav = currentGallery.length > 1;
+          lightboxNav.style.display = showNav ? "flex" : "none";
+          lightboxPrev.disabled = currentGalleryIndex === 0;
+          lightboxNext.disabled = currentGalleryIndex === currentGallery.length - 1;
+          lightboxPrev.style.opacity = lightboxPrev.disabled ? "0.5" : "1";
+          lightboxNext.style.opacity = lightboxNext.disabled ? "0.5" : "1";
+        };
+
+        const openGallery = function (images, altText) {
+          currentGallery = images.filter(Boolean);
+          currentGalleryIndex = 0;
+          lightboxImg.alt = altText || "Expanded preview";
+          setGalleryImage();
+          lightbox.classList.add("is-open");
+          lightbox.setAttribute("aria-hidden", "false");
+        };
+
         const closeLightbox = function () {
           lightbox.classList.remove("is-open");
           lightbox.setAttribute("aria-hidden", "true");
           lightboxImg.src = "";
+          currentGallery = [];
+          currentGalleryIndex = 0;
+          lightboxNav.style.display = "none";
         };
 
         clickableImages.forEach(function (img) {
           img.addEventListener("click", function () {
-            lightboxImg.src = img.src;
-            lightboxImg.alt = img.alt || "Expanded calendar preview";
-            lightbox.classList.add("is-open");
-            lightbox.setAttribute("aria-hidden", "false");
+            openGallery([img.src], img.alt || "Expanded calendar preview");
           });
         });
 
         referralCards.forEach(function (card) {
           card.addEventListener("click", function () {
-            lightboxImg.src = card.getAttribute("data-preview-src");
-            lightboxImg.alt = card.getAttribute("data-preview-alt") || "Expanded referral preview";
-            lightbox.classList.add("is-open");
-            lightbox.setAttribute("aria-hidden", "false");
+            const firstImage = card.getAttribute("data-preview-src");
+            const secondImage = card.getAttribute("data-preview-src-2");
+            openGallery([firstImage, secondImage], card.getAttribute("data-preview-alt") || "Expanded referral preview");
           });
+        });
+
+        lightboxPrev.addEventListener("click", function (event) {
+          event.stopPropagation();
+          if (currentGalleryIndex > 0) {
+            currentGalleryIndex -= 1;
+            setGalleryImage();
+          }
+        });
+
+        lightboxNext.addEventListener("click", function (event) {
+          event.stopPropagation();
+          if (currentGalleryIndex < currentGallery.length - 1) {
+            currentGalleryIndex += 1;
+            setGalleryImage();
+          }
         });
 
         closeBtn.addEventListener("click", closeLightbox);
