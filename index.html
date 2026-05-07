@@ -1916,6 +1916,8 @@
 
         let currentGallery = [];
         let currentGalleryIndex = 0;
+        let autoGalleryTimer = null;
+        const AUTO_GALLERY_MS = 2500;
         const lightboxNav = document.createElement("div");
         const lightboxPrev = document.createElement("button");
         const lightboxNext = document.createElement("button");
@@ -1936,10 +1938,25 @@
           lightboxImg.alt = currentGallery.length > 1 ? "Referral program details poster " + (currentGalleryIndex + 1) : (lightboxImg.alt || "Expanded preview");
           const showNav = currentGallery.length > 1;
           lightboxNav.style.display = showNav ? "flex" : "none";
-          lightboxPrev.disabled = currentGalleryIndex === 0;
-          lightboxNext.disabled = currentGalleryIndex === currentGallery.length - 1;
+          lightboxPrev.disabled = currentGallery.length < 2;
+          lightboxNext.disabled = currentGallery.length < 2;
           lightboxPrev.style.opacity = lightboxPrev.disabled ? "0.5" : "1";
           lightboxNext.style.opacity = lightboxNext.disabled ? "0.5" : "1";
+        };
+
+        const stopAutoGallery = function () {
+          if (autoGalleryTimer) {
+            window.clearInterval(autoGalleryTimer);
+            autoGalleryTimer = null;
+          }
+        };
+
+        const startAutoGallery = function () {
+          if (currentGallery.length < 2 || autoGalleryTimer) return;
+          autoGalleryTimer = window.setInterval(function () {
+            currentGalleryIndex = (currentGalleryIndex + 1) % currentGallery.length;
+            setGalleryImage();
+          }, AUTO_GALLERY_MS);
         };
 
         const openGallery = function (images, altText) {
@@ -1949,12 +1966,14 @@
           setGalleryImage();
           lightbox.classList.add("is-open");
           lightbox.setAttribute("aria-hidden", "false");
+          startAutoGallery();
         };
 
         const closeLightbox = function () {
           lightbox.classList.remove("is-open");
           lightbox.setAttribute("aria-hidden", "true");
           lightboxImg.src = "";
+          stopAutoGallery();
           currentGallery = [];
           currentGalleryIndex = 0;
           lightboxNav.style.display = "none";
@@ -1976,17 +1995,21 @@
 
         lightboxPrev.addEventListener("click", function (event) {
           event.stopPropagation();
-          if (currentGalleryIndex > 0) {
-            currentGalleryIndex -= 1;
+          if (currentGallery.length > 1) {
+            currentGalleryIndex = (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
             setGalleryImage();
+            stopAutoGallery();
+            startAutoGallery();
           }
         });
 
         lightboxNext.addEventListener("click", function (event) {
           event.stopPropagation();
-          if (currentGalleryIndex < currentGallery.length - 1) {
-            currentGalleryIndex += 1;
+          if (currentGallery.length > 1) {
+            currentGalleryIndex = (currentGalleryIndex + 1) % currentGallery.length;
             setGalleryImage();
+            stopAutoGallery();
+            startAutoGallery();
           }
         });
 
